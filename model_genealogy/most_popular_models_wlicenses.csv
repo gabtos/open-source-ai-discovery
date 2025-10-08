@@ -1,0 +1,12 @@
+model_name,num_children,has_parent,is_in_records,license
+Qwen/Qwen2.5-1.5B-Instruct,342,FALSE,FALSE,apache-2.0
+Qwen/Qwen2.5-7B-Instruct,253,FALSE,FALSE,apache-2.0
+teknium/OpenHermes-2.5-Mistral-7B,121,TRUE,TRUE,apache-2.0
+beomi/Llama-3-Open-Ko-8B-Instruct-preview,113,FALSE,TRUE,llama3
+Qwen/Qwen2.5-32B-Instruct,90,FALSE,FALSE,apache-2.0
+deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B,88,FALSE,FALSE,mit
+mistralai/Mistral-7B-v0.1,87,FALSE,FALSE,apache-2.0
+meta-llama/Meta-Llama-3-8B,70,FALSE,FALSE,llama3
+aaditya/Llama3-OpenBioLLM-8B,60,TRUE,TRUE,llama3
+microsoft/swin-tiny-patch4-window7-224,53,FALSE,FALSE,apache-2.0
+openchat/openchat-3.5-0106,53,TRUE,TRUE,apache-2.0
