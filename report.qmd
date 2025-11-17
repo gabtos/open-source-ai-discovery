@@ -3,7 +3,7 @@ title: "The State of \"Open\" Source AI"
 format:
   html:
     toc: true
-    toc-depth: 3
+    toc-depth: 4
     toc-location: left
     code-fold: true
     code-summary: "Click to show code"
@@ -12,11 +12,20 @@ format:
 
 > The AI boom, driven by unprecedented investment and access to tools, has spawned a flood of models claiming to be “open.” 
 
-The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term in clear, unambiguous standards. Yet, the concept and application of openness in AI are nascent and inconsistently understood. 
+The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term Open Source AI using clear, unambiguous standards. Yet, the concept and application of openness in AI are nascent and inconsistently understood. 
 
-Drawing on a growing set of current AI models described as ‘open,’ this session explores how the term is currently applied and describes how different conceptions of open AI relate to the use, sharing, study, and modification of these models.
+Drawing on a growing set of current AI models described as ‘open,’ this study explores how the term is currently applied and describes how different conceptions of open AI relate to the use, sharing, study, and modification of these models.
 
 This project uses model metadata from Huggingface to understand how 'open' AI models are described. The goal is to uncover patterns in how the idea of 'open' models are understood. 
+
+## Goals
+- Understand how “open” models are being released 
+- Analyze key trends in “open” AI model releases
+
+**Not**
+
+- Evaluate models for “openness” 
+- Evaluate the Open Source AI Definition (OSAID 1.0)
 
 ## Presentation
 Get the video and a presentation from the 2025 All Things Open Conference. 
@@ -33,16 +42,9 @@ Get the video and a presentation from the 2025 All Things Open Conference.
     </iframe>
 ```
 
-## Goals
-- Understand how “open” models are being released 
-- Analyze key trends in “open” AI model releases
-
-**Not**
-
-- Evaluate models for “openness” 
-- Evaluate the Open Source AI Definition (OSAID 1.0)
-
 ## Preliminary Findings
+Preliminary exploratory analysis of the Huggin Face data points to highly heterogeneous practices in how developers signal openness in AI. These results illustrate some promise in OSAID adoption as well as confusion surrounding licensing practices. 
+
 - The overwhelming majority of “open” models are based on larger models
 - Apache 2.0 is the most popular OSI-approved license, followed by MIT
 - CC-by licenses are prevalent, despite Creative Commons’ recommendations against using CC licenses for software
@@ -72,8 +74,9 @@ open_source_df = pd.read_csv('model_data/primary_datasets/hf_models_open_source_
 ```
 
 
-# License Environment
-## 1.1 Which Licenses Dominate
+## License Environment
+### Top 10 Licenses
+Two OSI-approved Open Source licenses––Apache 2.0 and MIT––are the most popular licenses, accounting for 28% of all models in the sample. However, a majorify of models (58%) are released with an “unknown” license, pointing to a lack of standardization in how data about models is collected and a general lack of enforceability in requiring a license for AI model releases on Hugging Face. A much smaller share (3%) are released under CC-by licenses, despite Creative Commons’ advice against using their licenses for software, as they don’t specify how source code can be distributed. This finding suggests that the code component of a significant portion of models are compatible the OSAID.  However, a much larger subset either omits licensing information, use a custom license or using a license not appropriate for use with software. 
 
 ```{python}
 import pandas as pd
@@ -93,8 +96,9 @@ license_counts[:10]
 ```
 
 
-## Unique Authors
+<!-- ## Unique Authors -->
 ```{python}
+#| include: false
 open_df['author'].nunique()
 #4642
 
@@ -102,7 +106,7 @@ open_df['author'].nunique()
 # #31
 ```
 
-#### How do licenses propagate over time
+### License use over time
 ```{python}
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -231,6 +235,7 @@ plot_license_trends(
 ```
 
 ### Popular Models
+Many models are built using other, larger models. This matters because it appears that large, popularly models used as base (i.e. “foundation” models), will have greater downstream influence. Greater understanding of the terms under which these large models are released will be instrumental in answering the policy question. 
 ```{python}
 
 popular_models_df = pd.read_csv('model_genealogy/most_popular_models_v2.csv')
@@ -374,17 +379,26 @@ display(counts_wide.head(20))
 ```
 
 ## Custom Licenses
+Custom licenses like Qwen, Llama, Gemma, Grok, and OpenRAIL are becoming increasingly common, particularly among for large foundation models. Most, if not all, proprietary licenses impose usage restrictions that appear incompatible with the four freedoms of Open Source by limiting the domain and purpose of the system’s use. This trend reflects a growing prevalence of “open washing,” in which developers gain the reputational and adoption benefits associated with Open Source software while simultaneously restricting model use and redistributing liability.
 
-### Deepseek
-
-
+### Qwen
+<details>
+<summary>Qwen License Seek Details</summary>
+<!--All you need is a blank line-->
 2. Grant of Rights
 You are granted a non-exclusive, worldwide, non-transferable and royalty-free limited license under Alibaba Cloud's intellectual property or other rights owned by Us embodied in the Materials **to use, reproduce, distribute, copy, create derivative works of, and make modifications to the Materials.**
 
 4. Restrictions
 If you are commercially using the Materials, and **your product or service has more than 100 million monthly active users, You shall request a license from Us.** You cannot exercise your rights under this Agreement without our express authorization.
+</details>
+
+
 
 #### DeepSeek (Model License)
+<details>
+<summary>DeepSeek License Details</summary>
+<!--All you need is a blank line-->
+
 2. Grant of Copyright License. Subject to the terms and conditions of this License, DeepSeek hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to **reproduce, prepare, publicly display, publicly perform, sublicense, and distribute** the Complementary Material, the Model, and Derivatives of the Model.
 
 ***Use Restrictions** You agree not to use the Model or Derivatives of the Model:
@@ -399,83 +413,61 @@ For fully automated decision making that adversely impacts an individual’s leg
 For any use intended to or which has the effect of discriminating against or harming individuals or groups based on online or offline social behavior or known or predicted personal or personality characteristics;
 To exploit any of the vulnerabilities of a specific group of persons based on their age, social, physical or mental characteristics, in order to materially distort the behavior of a person pertaining to that group in a manner that causes or is likely to cause that person or another person physical or psychological harm;
 For any use intended to or which has the effect of discriminating against individuals or groups based on legally protected characteristics or categories.
+</details>
+
+
 
 
 ### Llama
+<details>
+<summary>Llama License Details</summary>
+<!--All you need is a blank line-->
+
+a. Grant of Rights. You are granted a non-exclusive, worldwide, non-transferable and royalty-free limited license under Meta’s intellectual property…**to use, reproduce, distribute, copy, create derivative works of, and make modifications to the Llama Materials.**
+
+iv. Your use of the Llama Materials must…***adhere to the Acceptable Use Policy** for the Llama Materials (available at https://llama.com/llama3/use-policy), which is hereby incorporated by reference into this Agreement.
+
+2. Additional Commercial Terms. If, on the Meta Llama 3 version release date, the monthly active users of the products or services made… is greater than **700 million monthly active users in the preceding calendar month, you must request a license from Meta…**
+
+With respect to any multimodal models included in Llama 4, the rights granted under Section 1(a) of the Llama 4 Community License Agreement are **not being granted to you if you are an individual domiciled in, or a company with a principal place of business in, the European Union.**
+</details>
 
 ### Grok
+<details>
+<summary>Grok License Details</summary>
+<!--All you need is a blank line-->
+
+a. Permitted Uses: xAI grants you a non-exclusive, worldwide, revocable license to **use, reproduce, distribute, and modify the Materials: For non-commercial and research purposes; and for commercial use solely if you and your affiliates abide by all of the guardrails provided in xAI's Acceptable Use Policy (https://x.ai/legal/acceptable-use-policy),** including 1. Comply with the law, 2. Do not harm people or property, and 3. Respect guardrails and don't mislead.
+
+b. Restrictions:
+You may not use the Materials, derivatives, or outputs (including generated data) to **train, create, or improve any foundational, large language, or general-purpose AI models,** except for modifications or fine-tuning of Grok 2 permitted under and in accordance with the terms of this Agreement.
+
+5. Acceptable Use
+**You are responsible for implementing appropriate safety measures, including filters and human oversight, suitable for your use case. You must comply with xAI’s Acceptable Use Policy (AUP), as well as all applicable laws. You may not use the Materials for illegal, harmful, or abusive activities.**
+</details>
 
 ### Gemma 
+<details>
+<summary>Gemma License Details</summary>
+<!--All you need is a blank line-->
 
-# Exploratory Analysis
-## Core descriptive statistics
-- Total number of models
-- Number of unique organizations or authors
-- Distribution of licenses
-    - License coverage (Missing metadata counts)
+2.2 Use
+You may **use, reproduce, modify, Distribute, perform or display** any of the Gemma Services only in accordance with the terms of this Agreement, and must not violate (or encourage or permit anyone else to violate) any term of this Agreement.
 
-## Author and organization metrics
-- Most prolific authors (count of models per author)
-- Authors with the most downloads
-
-## Model metrics
-- Models with the most children
-- Models with the most downloads
+3.2 Use Restrictions
+You **must not use any of the Gemma Services: for the restricted uses set forth in the Gemma Prohibited Use Policy at ai.google.dev/gemma/prohibited_use_policy ("Prohibited Use Policy"),** which is hereby incorporated by reference into this Agreement; or in violation of applicable laws and regulations.
+</details>
 
 
-## Datasets
-- Datasets most used
-- Distribution of licenses
+## Conslusion & Next Steps
+Collectively, these preliminary findings start to delineate the gaps between rhetoric and reality in "open" AI development. Most importantly, early results underscore a deep chasm between how openness is signaled and the OSAID. Moving forward, the next phase of the analysis will expand on quantitative findings with further trend and network analysis. For the qualitative portion, quantitative findings will be integrated with assessments on definitions of Open Source AI in federal and state policy documents. 
 
-## License relationships
-- License propagation
-    - Does the license of children typically match that of their base model?
+> This is a living project, and I’m eager to collaborate.
 
-## Genealogy & derivation insights
-- Average number of derivations per model
-- Most influential models (top N by descendant count)
-- Model lineage length — longest chain of derivation (depth)
+I plan to extend this study by:
 
-- Proportion of derived vs. original models
-
-## Temporal patterns
-- Model releases over time
-    - by month or year (time series)
-- Trends by license
-    - Are permissive or restrictive licenses increasing?
-
-
-## Tags, tasks, and categories
-- Most common task types
-    - Tags like “text-generation,” “image-classification,” etc.:
-
-- Co-occurrence of tasks and licenses
-
-
-## Further down the road
-Author specialization
-- Which authors dominate particular task categories?
-
-Co-occurrence
-- Licenses 
-- Models/datasets
-
-# Analysis Guiding Questions
-
-| **Category**          | **Example Question**                                                 |
-|------------------------|----------------------------------------------------------------------|
-| License Environment    | Which licenses dominate?                                              |
-| License Environment    | How do licenses propagate through time?                               |
-| Authorship Patterns    | Who builds the most models, and how do they collaborate?              |
-| Genealogy Influence    | Which models are most reused as bases?                                |
-| Temporal Dynamics      | When did major growth periods occur?                                 |
-| Topical Trends         | Which task domains are expanding fastest?                            |
-
-```{python}
-#| echo: false
-#| output: false
-import pandas as pd
-df = pd.DataFrame({"x":[1,2,3], "y":[5,6,7]})
-df
-
-```
+- Conducting network analysis of model relationships and building a model genealogy.
+- Tracking license propagation to see if restrictions are spreading correctly or being ignored.
+- Analyzing download and reuse trends to measure real-world impact.
+- Studying documentation practices and how developers describe openness.
+- Connecting these findings to policy frameworks, since future AI legislation will hinge on how “open source AI” is defined and applied.
