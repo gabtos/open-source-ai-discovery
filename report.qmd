@@ -1,25 +1,39 @@
 ---
 title: "The State of \"Open\" Source AI"
+subtitle: "Exploring Data on AI Model Releases"
+author:
+  - name: Gabriel Toscano
+    orcid: 0009-0005-0673-9708
+    email: first_name.last_name@duke.edu
+    affiliations:
+      - name: Duke University Sanford School of Public Policy
 output-file: "index.html"
 format:
   html:
+    smooth-scroll: false
     toc: true
     toc-depth: 4
     toc-location: left
     code-fold: true
     code-summary: "Click to show code"
     embed-resources: true
+    theme:
+      light: yeti
+     
 ---
 
-> The AI boom, driven by unprecedented investment and access to tools, has spawned a flood of models claiming to be “open.” 
+## 1.0 Executive Summary
+The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term Open Source AI using clear, unambiguous standards. Yet, openness in AI is nascent and inconsistently understood. 
 
-The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term Open Source AI using clear, unambiguous standards. Yet, the concept and application of openness in AI are nascent and inconsistently understoogit rm -r --cached .d. 
+Drawing on a growing set of current AI models described as "open", this study explores how the term is currently applied and describes how different conceptions of open AI relate to the use, sharing, study, and modification of these models.
 
-Drawing on a growing set of current AI models described as ‘open,’ this study explores how the term is currently applied and describes how different conceptions of open AI relate to the use, sharing, study, and modification of these models.
+This project uses model metadata from [Hugging Face](https://huggingface.co/) to understand how "open" AI models are described. The goal is to uncover patterns in how the idea of "open" models is used in practice. 
 
-This project uses model metadata from Huggingface to understand how 'open' AI models are described. The goal is to uncover patterns in how the idea of 'open' models are understood. 
+::: {.callout-tip title="Why now?"}
+The AI boom, driven by unprecedented investment and access to tools, has spawned a flood of models claiming to be “open.” 
+:::
 
-## Goals
+### 1.1 Goals
 - Understand how “open” models are being released 
 - Analyze key trends in “open” AI model releases
 
@@ -28,7 +42,26 @@ This project uses model metadata from Huggingface to understand how 'open' AI mo
 - Evaluate models for “openness” 
 - Evaluate the Open Source AI Definition (OSAID 1.0)
 
-## Presentation
+### 1.2 Data Gathering
+Hugging Face is the most widely-used platform for AI models with over 200,000 models hosted on the repository. It allows people to share and use AI models and related datasets. 
+
+This study downloaded AI model metadata using the Hugginface [Hub API](https://huggingface.co/docs/hub/api). Metadata incldues `model name`,`author`, `release date`, `license`, and `last modified date`, `base-model`, `downloads`. 
+
+- Selected models using full-text-search, looking for any models where the model name or metadata includes the word 'open' (N = 20,069)
+- Using author search for large AI labs (Alibaba, Deepseek, Google, Meta, Microsoft, Mistral, XAI, Open AI) 
+(N=2,028)
+
+### 1.3 Key Findings
+Preliminary exploratory analysis of the Huggin Face data points to highly heterogeneous practices in how developers signal openness in AI. These results illustrate some promise in OSAID adoption as well as confusion surrounding licensing practices. 
+
+- The overwhelming majority of “open” models are based on larger models
+- Apache 2.0 is the most popular OSI-approved license, followed by MIT
+- CC-by licenses are prevalent, despite Creative Commons’ recommendations against using CC licenses for software
+- The vast majority, over 50% of all models in in this sample, are released with an “unknown license” 
+- Alibaba’s Qwen family of models are the most popular base model in this sample
+- Custom licenses like Qwen, Llama, Gemma, Grok, OpenRAIL are becoming increasingly common, specially for flagship models, yet impose usage restrictions
+
+### 1.4 Presentation
 Get the video and a presentation from the 2025 All Things Open Conference. 
 
 [Presentation video](https://opensource.org/blog/state-of-the-source-at-ato-2025-state-of-the-open-ai)
@@ -43,26 +76,6 @@ Get the video and a presentation from the 2025 All Things Open Conference.
     </iframe>
 ```
 
-## Preliminary Findings
-Preliminary exploratory analysis of the Huggin Face data points to highly heterogeneous practices in how developers signal openness in AI. These results illustrate some promise in OSAID adoption as well as confusion surrounding licensing practices. 
-
-- The overwhelming majority of “open” models are based on larger models
-- Apache 2.0 is the most popular OSI-approved license, followed by MIT
-- CC-by licenses are prevalent, despite Creative Commons’ recommendations against using CC licenses for software
-- The vast majority, over 50% of all models in in this sample, are released with an “unknown license” 
-- Alibaba’s Qwen family of models are the most popular base model in this sample
-- Custom licenses like Qwen, Llama, Gemma, Grok, OpenRAIL are becoming increasingly common, specially for flagship models, yet impose usage restrictions
-
-
-## Data Gathering
-Downloaded metadata for models using the Hugginface Hub API. 
-
-- Selected models using full-text-search, looking for any models where the model name or metadata includes the word 'open' (N = 20,069)
-- Using author search for large AI labs (Alibaba, Deepseek, Google, Meta, Microsoft, Mistral, XAI, Open AI) 
-(N=2,028)
-
-
-
 ```{python}
 #| echo: false
 #| output: false
@@ -75,17 +88,23 @@ open_source_df = pd.read_csv('model_data/primary_datasets/hf_models_open_source_
 ```
 
 
-## License Environment
-Two OSI-approved Open Source licenses––Apache 2.0 and MIT––are the most popular licenses, accounting for 28% of all models in the sample. However, a majorify of models (58%) are released with an “unknown” license, pointing to a lack of standardization in how data about models is collected and a general lack of enforceability in requiring a license for AI model releases on Hugging Face. A much smaller share (3%) are released under CC-by licenses, despite Creative Commons’ advice against using their licenses for software, as they don’t specify how source code can be distributed. 
+## 2.0 Licensing Environment
+Two OSI-approved Open Source licenses––Apache 2.0 and MIT––are the most popular licenses, accounting for 28% of all models in the sample. A much smaller share (3%) are released under CC-by licenses, despite Creative Commons’ advice against using their licenses for software, as they don’t specify how source code can be distributed.  
 
-This finding suggests that the code component of a significant portion of models are compatible the OSAID.  However, a much larger subset either omits licensing information, use a custom license or using a license not appropriate for use with software. 
+A majority of models (58%) are released with an “unknown” license, pointing to a lack of standardization in how data about models is collected and a general lack of enforceability in requiring a license for AI model releases on Hugging Face.
 
-### Top 10 Licenses
+The full list of [OSI-approved licenses are available online](https://opensource.org/licenses).
+
+::: {.callout-tip title="Why this matters"}
+This finding suggests that the code component of a significant portion of models are compatible the OSAID.  However, a much larger subset either omits licensing information, use a custom license or apply a license not appropriate for use with software. 
+:::
+
+### 2.1 Top 10 Licenses
 
 ```{python}
 import pandas as pd
 
-# Load your CSV file (replace 'your_file.csv' with your actual filename)
+# Load your CSV file 
 df = pd.read_csv('model_data/primary_datasets/hf_models_open_raw.csv')
 
 # Count occurrences of each license
@@ -94,7 +113,7 @@ license_counts.columns = ['license', 'count']
 
 # Calculate proportion
 total_models = len(df)
-license_counts['proportion_percent'] = 100*(license_counts['count'] / total_models)
+license_counts['proportion_percent'] = round(100*(license_counts['count'] / total_models), 2)
 
 license_counts[:10]
 ```
@@ -110,7 +129,7 @@ open_df['author'].nunique()
 # #31
 ```
 
-### License use over time
+### 2.2 License use over time
 ```{python}
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -238,29 +257,9 @@ plot_license_trends(
 
 ```
 
-### Popular Models
-Many models are built using other, larger models. This matters because it appears that large, popularly models used as base (i.e. “foundation” models), will have greater downstream influence. 
-
-Greater understanding of the terms under which these large models are released will be instrumental as we look further into how developers use and interpret the OSAID and Open Source AI.  
-```{python}
-
-popular_models_df = pd.read_csv('model_genealogy/most_popular_models_v2.csv')
-
-# popular_models_df.head(20)
-display_popular_models = popular_models_df[['model_name', 'num_children']] \
-    .head(10) \
-    .rename(columns={
-        'model_name': 'Model Name',
-        'num_children': 'Children Count'
-    })
-
-display_popular_models
 
 
-```
-
-
-## Licenses by author
+### 2.3 Licenses by author
 ```{python}
 #| warnings: false
 # --- Config (edit these) ---
@@ -384,12 +383,63 @@ display(counts_tall.head(20))
 display(counts_wide.head(20))
 ```
 
-## Custom Licenses
-Custom licenses like Qwen, Llama, Gemma, Grok, and OpenRAIL are becoming increasingly common, particularly among for large foundation models. Most, if not all, proprietary licenses impose usage restrictions that appear incompatible with the four freedoms of Open Source by limiting the domain and purpose of the system’s use. 
+### 2.4 Custom Licenses
+Custom licenses like Qwen, Llama, Gemma, Grok, and OpenRAIL are becoming increasingly common, particularly among for large foundation models. Most, if not all, proprietary licenses impose usage restrictions that appear incompatible with the four freedoms of Open Source by limiting the domain and purpose of the system’s use.
 
+::: {.callout-tip title="Why this matters"}
 This trend reflects a growing prevalence of “open washing,” in which developers gain the reputational and adoption benefits associated with Open Source software while simultaneously restricting model use and redistributing liability.
+:::
 
-### Qwen
+
+## 3.0 Popular Models & Their Licenses
+Many models are built using other, larger models. Greater understanding of the terms under which these large models are released will be instrumental as we look further into how developers use and interpret the OSAID and Open Source AI.  
+
+::: {.callout-tip title="Why this matters?"}
+The licensing and AI model publishing practices among popularly-used models will likely have greater downstream influence. 
+::: 
+
+### 3.1 Top 10 Most Popular Models
+While the sample has over 20,000 models, many use other "base models" which are result in smaller models that are [fine-tuned](https://huggingface.co/docs/transformers/training) or [quantized](https://huggingface.co/docs/optimum/en/concept_guides/quantization) versions of the larger base model.
+
+
+```{python}
+
+popular_models_df = pd.read_csv('model_genealogy/most_popular_models_v2.csv')
+
+# popular_models_df.head(20)
+display_popular_models = popular_models_df[['model_name', 'num_children']] \
+    .head(10) \
+    .rename(columns={
+        'model_name': 'Model Name',
+        'num_children': 'Children Count'
+    })
+
+display_popular_models
+
+
+```
+
+### 3.2 Popular Models' Licenses
+At the organization level, licensing practices are surprisingly homogeneous. First, all organizations in this study, except for OpenAI, have models that use a proprietary (i.e. custom) license as well as models that use OSI-approved Open Source licences. 
+
+In general, the organizations are released their largest, flagship 'open' model under a restrictive, customized license while smaller or older models are released under permissive or standard Open Source licenses. 
+
+::: {.callout-tip title="Why this matters?"}
+Every custom license (.e.g Llama, Qwen) in this study uses the language of Open Source, including permissions to use, study, share and modify the system while at the same time imposing restrctions on how or where a system is used. Often, usage restrictions are subject to Acceptable Use Policies akin to consumer apps and services. 
+:::
+
+| Organization | Number of Models | License Types |
+|--------------|------------------|----------------|
+| [Alibaba (Qwen)](https://huggingface.co/Qwen) | +300 | Apache 2.0, Qwen |
+| [DeepSeek](https://huggingface.co/deepseek-ai) | 78  | MIT for code, DeepSeek for model license |
+| [Meta (Llama)](https://huggingface.co/meta-llama) | 70 | Llama-family of licenses |
+| [Mistral](https://huggingface.co/mistralai) | 39 | Apache 2.0 |
+|[Microsoft](https://huggingface.co/microsoft) | +400 | MIT, Apache, CC BY-*, Microsoft Research License |
+| [Google](https://huggingface.co/google) | +1000 | Apache 2.0, Gemma licenses |
+| [XAI (Grok)](https://huggingface.co/XAI) | 2 | Grok-1 under Apache 2.0, Grok-2 under Grok-2 license |
+| [OpenAI](https://huggingface.co/openai) | 30 | Apache 2.0 |
+
+#### 3.2.1 Qwen 
 <details>
 <summary>Qwen License Seek Details</summary>
 <!--All you need is a blank line-->
@@ -400,9 +450,7 @@ You are granted a non-exclusive, worldwide, non-transferable and royalty-free li
 If you are commercially using the Materials, and **your product or service has more than 100 million monthly active users, You shall request a license from Us.** You cannot exercise your rights under this Agreement without our express authorization.
 </details>
 
-
-
-#### DeepSeek (Model License)
+#### 3.2.2 DeepSeek (Model License)
 <details>
 <summary>DeepSeek License Details</summary>
 <!--All you need is a blank line-->
@@ -426,7 +474,7 @@ For any use intended to or which has the effect of discriminating against indivi
 
 
 
-### Llama
+#### 3.2.2 Llama
 <details>
 <summary>Llama License Details</summary>
 <!--All you need is a blank line-->
@@ -440,7 +488,7 @@ iv. Your use of the Llama Materials must…***adhere to the Acceptable Use Polic
 With respect to any multimodal models included in Llama 4, the rights granted under Section 1(a) of the Llama 4 Community License Agreement are **not being granted to you if you are an individual domiciled in, or a company with a principal place of business in, the European Union.**
 </details>
 
-### Grok
+#### 3.2.3 Grok
 <details>
 <summary>Grok License Details</summary>
 <!--All you need is a blank line-->
@@ -454,7 +502,7 @@ You may not use the Materials, derivatives, or outputs (including generated data
 **You are responsible for implementing appropriate safety measures, including filters and human oversight, suitable for your use case. You must comply with xAI’s Acceptable Use Policy (AUP), as well as all applicable laws. You may not use the Materials for illegal, harmful, or abusive activities.**
 </details>
 
-### Gemma 
+#### 3.2.4 Gemma 
 <details>
 <summary>Gemma License Details</summary>
 <!--All you need is a blank line-->
@@ -467,7 +515,7 @@ You **must not use any of the Gemma Services: for the restricted uses set forth 
 </details>
 
 
-## Conslusion & Next Steps
+## 4.0 Conclusion & Next Steps
 Collectively, these preliminary findings start to delineate the gaps between rhetoric and reality in "open" AI development. Most importantly, early results underscore a deep chasm between how openness is signaled and the OSAID. 
 
 Moving forward, the next phase of the analysis will expand on quantitative findings with further trend and network analysis. For the qualitative portion, quantitative findings will be integrated with assessments on definitions of Open Source AI in federal and state policy documents. 
