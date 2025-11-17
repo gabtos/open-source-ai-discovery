@@ -1,5 +1,6 @@
 ---
 title: "The State of \"Open\" Source AI"
+output-file: "index.html"
 format:
   html:
     toc: true
