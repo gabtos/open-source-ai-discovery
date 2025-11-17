@@ -12,7 +12,7 @@ format:
 
 > The AI boom, driven by unprecedented investment and access to tools, has spawned a flood of models claiming to be “open.” 
 
-The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term Open Source AI using clear, unambiguous standards. Yet, the concept and application of openness in AI are nascent and inconsistently understood. 
+The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term Open Source AI using clear, unambiguous standards. Yet, the concept and application of openness in AI are nascent and inconsistently understoogit rm -r --cached .d. 
 
 Drawing on a growing set of current AI models described as ‘open,’ this study explores how the term is currently applied and describes how different conceptions of open AI relate to the use, sharing, study, and modification of these models.
 
