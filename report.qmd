@@ -76,8 +76,11 @@ open_source_df = pd.read_csv('model_data/primary_datasets/hf_models_open_source_
 
 
 ## License Environment
+Two OSI-approved Open Source licenses––Apache 2.0 and MIT––are the most popular licenses, accounting for 28% of all models in the sample. However, a majorify of models (58%) are released with an “unknown” license, pointing to a lack of standardization in how data about models is collected and a general lack of enforceability in requiring a license for AI model releases on Hugging Face. A much smaller share (3%) are released under CC-by licenses, despite Creative Commons’ advice against using their licenses for software, as they don’t specify how source code can be distributed. 
+
+This finding suggests that the code component of a significant portion of models are compatible the OSAID.  However, a much larger subset either omits licensing information, use a custom license or using a license not appropriate for use with software. 
+
 ### Top 10 Licenses
-Two OSI-approved Open Source licenses––Apache 2.0 and MIT––are the most popular licenses, accounting for 28% of all models in the sample. However, a majorify of models (58%) are released with an “unknown” license, pointing to a lack of standardization in how data about models is collected and a general lack of enforceability in requiring a license for AI model releases on Hugging Face. A much smaller share (3%) are released under CC-by licenses, despite Creative Commons’ advice against using their licenses for software, as they don’t specify how source code can be distributed. This finding suggests that the code component of a significant portion of models are compatible the OSAID.  However, a much larger subset either omits licensing information, use a custom license or using a license not appropriate for use with software. 
 
 ```{python}
 import pandas as pd
@@ -236,7 +239,9 @@ plot_license_trends(
 ```
 
 ### Popular Models
-Many models are built using other, larger models. This matters because it appears that large, popularly models used as base (i.e. “foundation” models), will have greater downstream influence. Greater understanding of the terms under which these large models are released will be instrumental in answering the policy question. 
+Many models are built using other, larger models. This matters because it appears that large, popularly models used as base (i.e. “foundation” models), will have greater downstream influence. 
+
+Greater understanding of the terms under which these large models are released will be instrumental as we look further into how developers use and interpret the OSAID and Open Source AI.  
 ```{python}
 
 popular_models_df = pd.read_csv('model_genealogy/most_popular_models_v2.csv')
@@ -380,7 +385,9 @@ display(counts_wide.head(20))
 ```
 
 ## Custom Licenses
-Custom licenses like Qwen, Llama, Gemma, Grok, and OpenRAIL are becoming increasingly common, particularly among for large foundation models. Most, if not all, proprietary licenses impose usage restrictions that appear incompatible with the four freedoms of Open Source by limiting the domain and purpose of the system’s use. This trend reflects a growing prevalence of “open washing,” in which developers gain the reputational and adoption benefits associated with Open Source software while simultaneously restricting model use and redistributing liability.
+Custom licenses like Qwen, Llama, Gemma, Grok, and OpenRAIL are becoming increasingly common, particularly among for large foundation models. Most, if not all, proprietary licenses impose usage restrictions that appear incompatible with the four freedoms of Open Source by limiting the domain and purpose of the system’s use. 
+
+This trend reflects a growing prevalence of “open washing,” in which developers gain the reputational and adoption benefits associated with Open Source software while simultaneously restricting model use and redistributing liability.
 
 ### Qwen
 <details>
@@ -461,7 +468,9 @@ You **must not use any of the Gemma Services: for the restricted uses set forth 
 
 
 ## Conslusion & Next Steps
-Collectively, these preliminary findings start to delineate the gaps between rhetoric and reality in "open" AI development. Most importantly, early results underscore a deep chasm between how openness is signaled and the OSAID. Moving forward, the next phase of the analysis will expand on quantitative findings with further trend and network analysis. For the qualitative portion, quantitative findings will be integrated with assessments on definitions of Open Source AI in federal and state policy documents. 
+Collectively, these preliminary findings start to delineate the gaps between rhetoric and reality in "open" AI development. Most importantly, early results underscore a deep chasm between how openness is signaled and the OSAID. 
+
+Moving forward, the next phase of the analysis will expand on quantitative findings with further trend and network analysis. For the qualitative portion, quantitative findings will be integrated with assessments on definitions of Open Source AI in federal and state policy documents. 
 
 > This is a living project, and I’m eager to collaborate.
 

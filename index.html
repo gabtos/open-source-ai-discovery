@@ -2318,10 +2318,11 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="license-environment" class="level2">
 <h2 class="anchored" data-anchor-id="license-environment">License Environment</h2>
+<p>Two OSI-approved Open Source licenses––Apache 2.0 and MIT––are the most popular licenses, accounting for 28% of all models in the sample. However, a majorify of models (58%) are released with an “unknown” license, pointing to a lack of standardization in how data about models is collected and a general lack of enforceability in requiring a license for AI model releases on Hugging Face. A much smaller share (3%) are released under CC-by licenses, despite Creative Commons’ advice against using their licenses for software, as they don’t specify how source code can be distributed.</p>
+<p>This finding suggests that the code component of a significant portion of models are compatible the OSAID. However, a much larger subset either omits licensing information, use a custom license or using a license not appropriate for use with software.</p>
 <section id="top-10-licenses" class="level3">
 <h3 class="anchored" data-anchor-id="top-10-licenses">Top 10 Licenses</h3>
-<p>Two OSI-approved Open Source licenses––Apache 2.0 and MIT––are the most popular licenses, accounting for 28% of all models in the sample. However, a majorify of models (58%) are released with an “unknown” license, pointing to a lack of standardization in how data about models is collected and a general lack of enforceability in requiring a license for AI model releases on Hugging Face. A much smaller share (3%) are released under CC-by licenses, despite Creative Commons’ advice against using their licenses for software, as they don’t specify how source code can be distributed. This finding suggests that the code component of a significant portion of models are compatible the OSAID. However, a much larger subset either omits licensing information, use a custom license or using a license not appropriate for use with software.</p>
-<div id="c1705bde" class="cell" data-execution_count="2">
+<div id="ee4bcb77" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Click to show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -2339,7 +2340,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>license_counts[:<span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="37">
 <div>
 
 
@@ -2423,7 +2424,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="license-use-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="license-use-over-time">License use over time</h3>
-<div id="970911f0" class="cell" data-execution_count="4">
+<div id="12079117" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Click to show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -2517,7 +2518,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pivoted</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="d2397ddf" class="cell" data-execution_count="5">
+<div id="19509fff" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Click to show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy original dataframe</span></span>
@@ -2559,7 +2560,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <div>
 
 
@@ -2944,8 +2945,9 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="popular-models" class="level3">
 <h3 class="anchored" data-anchor-id="popular-models">Popular Models</h3>
-<p>Many models are built using other, larger models. This matters because it appears that large, popularly models used as base (i.e. “foundation” models), will have greater downstream influence. Greater understanding of the terms under which these large models are released will be instrumental in answering the policy question.</p>
-<div id="3ebd6c62" class="cell" data-execution_count="6">
+<p>Many models are built using other, larger models. This matters because it appears that large, popularly models used as base (i.e. “foundation” models), will have greater downstream influence.</p>
+<p>Greater understanding of the terms under which these large models are released will be instrumental as we look further into how developers use and interpret the OSAID and Open Source AI.</p>
+<div id="a88ccecf" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Click to show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>popular_models_df <span class="op">=</span> pd.read_csv(<span class="st">&#39;model_genealogy/most_popular_models_v2.csv&#39;</span>)</span>
@@ -2960,7 +2962,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>display_popular_models</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <div>
 
 
@@ -3033,7 +3035,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="licenses-by-author" class="level2">
 <h2 class="anchored" data-anchor-id="licenses-by-author">Licenses by author</h2>
-<div id="2b74a722" class="cell" data-warnings="false" data-execution_count="7">
+<div id="c6fd1c45" class="cell" data-warnings="false" data-execution_count="7">
 <details class="code-fold">
 <summary>Click to show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Config (edit these) ---</span></span>
@@ -3501,7 +3503,8 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="custom-licenses" class="level2">
 <h2 class="anchored" data-anchor-id="custom-licenses">Custom Licenses</h2>
-<p>Custom licenses like Qwen, Llama, Gemma, Grok, and OpenRAIL are becoming increasingly common, particularly among for large foundation models. Most, if not all, proprietary licenses impose usage restrictions that appear incompatible with the four freedoms of Open Source by limiting the domain and purpose of the system’s use. This trend reflects a growing prevalence of “open washing,” in which developers gain the reputational and adoption benefits associated with Open Source software while simultaneously restricting model use and redistributing liability.</p>
+<p>Custom licenses like Qwen, Llama, Gemma, Grok, and OpenRAIL are becoming increasingly common, particularly among for large foundation models. Most, if not all, proprietary licenses impose usage restrictions that appear incompatible with the four freedoms of Open Source by limiting the domain and purpose of the system’s use.</p>
+<p>This trend reflects a growing prevalence of “open washing,” in which developers gain the reputational and adoption benefits associated with Open Source software while simultaneously restricting model use and redistributing liability.</p>
 <section id="qwen" class="level3">
 <h3 class="anchored" data-anchor-id="qwen">Qwen</h3>
 <details>
@@ -3577,7 +3580,8 @@ Gemma License Details
 </section>
 <section id="conslusion-next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="conslusion-next-steps">Conslusion &amp; Next Steps</h2>
-<p>Collectively, these preliminary findings start to delineate the gaps between rhetoric and reality in “open” AI development. Most importantly, early results underscore a deep chasm between how openness is signaled and the OSAID. Moving forward, the next phase of the analysis will expand on quantitative findings with further trend and network analysis. For the qualitative portion, quantitative findings will be integrated with assessments on definitions of Open Source AI in federal and state policy documents.</p>
+<p>Collectively, these preliminary findings start to delineate the gaps between rhetoric and reality in “open” AI development. Most importantly, early results underscore a deep chasm between how openness is signaled and the OSAID.</p>
+<p>Moving forward, the next phase of the analysis will expand on quantitative findings with further trend and network analysis. For the qualitative portion, quantitative findings will be integrated with assessments on definitions of Open Source AI in federal and state policy documents.</p>
 <blockquote class="blockquote">
 <p>This is a living project, and I’m eager to collaborate.</p>
 </blockquote>
