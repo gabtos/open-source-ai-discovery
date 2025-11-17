@@ -1,0 +1,481 @@
+---
+title: "The State of \"Open\" Source AI"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    code-fold: true
+    code-summary: "Click to show code"
+    embed-resources: true
+---
+
+> The AI boom, driven by unprecedented investment and access to tools, has spawned a flood of models claiming to be “open.” 
+
+The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term in clear, unambiguous standards. Yet, the concept and application of openness in AI are nascent and inconsistently understood. 
+
+Drawing on a growing set of current AI models described as ‘open,’ this session explores how the term is currently applied and describes how different conceptions of open AI relate to the use, sharing, study, and modification of these models.
+
+This project uses model metadata from Huggingface to understand how 'open' AI models are described. The goal is to uncover patterns in how the idea of 'open' models are understood. 
+
+## Presentation
+Get the video and a presentation from the 2025 All Things Open Conference. 
+
+[Presentation video](https://opensource.org/blog/state-of-the-source-at-ato-2025-state-of-the-open-ai)
+
+```{=html}
+    <iframe
+    src="report_files/pdf_presentation/State_open_AI_ATO_2025.pdf"
+    width="100%"
+    height="400px"
+    style="border:none;"
+    >
+    </iframe>
+```
+
+## Goals
+- Understand how “open” models are being released 
+- Analyze key trends in “open” AI model releases
+
+**Not**
+
+- Evaluate models for “openness” 
+- Evaluate the Open Source AI Definition (OSAID 1.0)
+
+## Preliminary Findings
+- The overwhelming majority of “open” models are based on larger models
+- Apache 2.0 is the most popular OSI-approved license, followed by MIT
+- CC-by licenses are prevalent, despite Creative Commons’ recommendations against using CC licenses for software
+- The vast majority, over 50% of all models in in this sample, are released with an “unknown license” 
+- Alibaba’s Qwen family of models are the most popular base model in this sample
+- Custom licenses like Qwen, Llama, Gemma, Grok, OpenRAIL are becoming increasingly common, specially for flagship models, yet impose usage restrictions
+
+
+## Data Gathering
+Downloaded metadata for models using the Hugginface Hub API. 
+
+- Selected models using full-text-search, looking for any models where the model name or metadata includes the word 'open' (N = 20,069)
+- Using author search for large AI labs (Alibaba, Deepseek, Google, Meta, Microsoft, Mistral, XAI, Open AI) 
+(N=2,028)
+
+
+
+```{python}
+#| echo: false
+#| output: false
+import pandas as pd
+# ==== LOAD CSV DATA ====   
+
+open_df = pd.read_csv('model_data/primary_datasets/hf_models_open_raw.csv')
+
+open_source_df = pd.read_csv('model_data/primary_datasets/hf_models_open_source_raw.csv')
+```
+
+
+# License Environment
+## 1.1 Which Licenses Dominate
+
+```{python}
+import pandas as pd
+
+# Load your CSV file (replace 'your_file.csv' with your actual filename)
+df = pd.read_csv('model_data/primary_datasets/hf_models_open_raw.csv')
+
+# Count occurrences of each license
+license_counts = df['license'].value_counts().reset_index()
+license_counts.columns = ['license', 'count']
+
+# Calculate proportion
+total_models = len(df)
+license_counts['proportion_percent'] = 100*(license_counts['count'] / total_models)
+
+license_counts[:10]
+```
+
+
+## Unique Authors
+```{python}
+open_df['author'].nunique()
+#4642
+
+# open_source_df['author'].nunique()
+# #31
+```
+
+#### How do licenses propagate over time
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def plot_license_trends(
+    df: pd.DataFrame,
+    date_col: str = "date_released",
+    license_col: str = "license",
+    licenses_to_include: list = None,
+    freq: str = "M",   # 'M' for month, 'Y' for year
+    top_n: int = None,
+    kind: str = "line",
+    figsize=(12,6)
+):
+    """
+    Plots how selected licenses are used over time.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    date_col : str
+        Name of the column with dates (e.g. 'created_at' or 'last_modified').
+    license_col : str
+        Name of the column with license names.
+    licenses_to_include : list, optional
+        A list of license names to include (e.g. ['mit', 'apache-2.0']).
+        If None, all non-unknown licenses are used.
+    freq : str, default='M'
+        Time frequency for aggregation ('M' for month, 'Y' for year).
+    top_n : int, optional
+        If provided, only the top N most frequent licenses are plotted.
+    kind : str, default='line'
+        'line' or 'area' chart type.
+    figsize : tuple, default=(12,6)
+        Figure size for the plot.
+    """
+
+    # 1️⃣ Convert to datetime
+    df = df.copy()
+    df[date_col] = pd.to_datetime(df[date_col], errors="coerce")
+
+    # 2️⃣ Clean up licenses
+    df[license_col] = df[license_col].astype(str).str.strip().str.lower()
+    df = df[df[license_col].notna() & (df[license_col] != "unknown")]
+
+    # 3️⃣ Filter for licenses of interest
+    if licenses_to_include:
+        licenses = [l.lower() for l in licenses_to_include]
+        df = df[df[license_col].isin(licenses)]
+
+    # 4️⃣ Create period column (e.g., year-month)
+    df["period"] = df[date_col].dt.to_period(freq).astype(str)
+
+    # 5️⃣ Group and pivot
+    grouped = (
+        df.groupby(["period", license_col])
+        .size()
+        .reset_index(name="count")
+    )
+
+    pivoted = grouped.pivot(
+        index="period", columns=license_col, values="count"
+    ).fillna(0)
+
+    # 6️⃣ Sort by date
+    pivoted.index = pd.to_datetime(pivoted.index)
+    pivoted = pivoted.sort_index()
+
+    # 7️⃣ Optionally select top N
+    if top_n:
+        top_cols = pivoted.sum().sort_values(ascending=False).head(top_n).index
+        pivoted = pivoted[top_cols]
+
+    # 8️⃣ Plot
+    plt.figure(figsize=figsize)
+
+    if kind == "area":
+        pivoted.plot.area(figsize=figsize, alpha=0.8)
+    else:
+        pivoted.plot(kind="line", linewidth=2, figsize=figsize)
+
+    plt.title("License Usage Over Time")
+    plt.xlabel("Date")
+    plt.ylabel("Number of Models")
+    plt.legend(title="License", bbox_to_anchor=(1.05, 1), loc="upper left")
+    plt.tight_layout()
+    plt.show()
+
+    return pivoted
+
+```
+
+```{python}
+#| warning: false
+# Copy original dataframe
+df_temp = open_df.copy()
+
+# Drop rows with missing licenses
+df_temp = df_temp[df_temp['license'].notna()].copy()
+
+# Normalize licenses (lowercase and remove spaces)
+df_temp['license'] = df_temp['license'].astype(str).str.lower().str.strip()
+
+# Combine all licenses that contain 'llama' into one label
+df_temp['license_combined'] = df_temp['license'].apply(
+    lambda x: 'llama-family' if 'llama' in x else x
+)
+
+# Optional: check results
+# print(f"Rows kept: {len(df_temp)}")
+
+# df_temp['license_combined'].value_counts().head(10)
+
+## Plot the top 5 licenses over time
+plot_license_trends(
+    df=df_temp,
+    date_col="date_released",
+    license_col="license_combined",
+    freq="M",
+    top_n=5,
+    figsize=(8,5)
+)
+
+
+```
+
+### Popular Models
+```{python}
+
+popular_models_df = pd.read_csv('model_genealogy/most_popular_models_v2.csv')
+
+# popular_models_df.head(20)
+display_popular_models = popular_models_df[['model_name', 'num_children']] \
+    .head(10) \
+    .rename(columns={
+        'model_name': 'Model Name',
+        'num_children': 'Children Count'
+    })
+
+display_popular_models
+
+
+```
+
+
+## Licenses by author
+```{python}
+#| warnings: false
+# --- Config (edit these) ---
+CSV_PATH   = "hf_models_by_author.csv"   # your existing CSV with model rows
+OUT_DIR    = "authors/author_license_counts"    # where to save outputs
+AUTHOR_COL = "owner"                              # column name for author/owner
+LICENSE_COL= "license"                             # column name for license string
+ID_COL     = "repo_id"                                  # optional: unique model id to drop dups (set None to skip)
+# ---------------------------
+
+import os, re
+import pandas as pd
+from pathlib import Path
+
+Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
+
+# Load
+df = pd.read_csv(CSV_PATH)
+
+# Optional: drop duplicates by model id if your CSV may have repeats
+if ID_COL and ID_COL in df.columns:
+    df = df.drop_duplicates(subset=[ID_COL])
+
+# Keep only needed columns; guard missing cols
+missing = [c for c in [AUTHOR_COL, LICENSE_COL] if c not in df.columns]
+if missing:
+    raise ValueError(f"Missing required columns in CSV: {missing}")
+
+work = df[[AUTHOR_COL, LICENSE_COL]].copy()
+
+# Normalize author
+work[AUTHOR_COL] = work[AUTHOR_COL].fillna("").astype(str).str.strip()
+work.loc[work[AUTHOR_COL] == "", AUTHOR_COL] = "UNKNOWN_AUTHOR"
+
+# Normalize and split license strings:
+# - lower case
+# - replace separators (comma/semicolon/slash/pipe) with commas
+# - remove extra spaces
+# - split into multiple rows (explode)
+def normalize_license(s: str) -> str:
+    s = (s or "").strip()
+    if not s:
+        return "unknown"
+    s = s.lower()
+    # common synonyms/variants
+    synonyms = {
+        "apache2": "apache-2.0",
+        "apache 2.0": "apache-2.0",
+        "apache-2": "apache-2.0",
+        "mit license": "mit",
+        "bsd-3": "bsd-3-clause",
+        "bsd-3-clause license": "bsd-3-clause",
+        "cc by 4.0": "cc-by-4.0",
+        "cc-by": "cc-by-4.0",
+        "cc-by v4": "cc-by-4.0",
+        "cc-by-4": "cc-by-4.0",
+        "cc-by 4.0": "cc-by-4.0",
+        "creative commons attribution 4.0": "cc-by-4.0",
+        "proprietary license": "proprietary",
+        "unknown license": "unknown",
+    }
+    s = synonyms.get(s, s)
+    return s
+
+# Replace various separators with commas, then split
+sep_pattern = re.compile(r"[;,/|]+")
+work[LICENSE_COL] = (
+    work[LICENSE_COL]
+    .fillna("unknown")
+    .astype(str)
+    .str.replace(r"\s+", " ", regex=True)
+    .str.strip()
+    .str.replace(sep_pattern, ",", regex=True)
+)
+
+# Split and explode to one license per row
+work = (
+    work
+    .assign(**{LICENSE_COL: work[LICENSE_COL].str.split(",")})
+    .explode(LICENSE_COL, ignore_index=True)
+)
+
+# Final clean of license tokens
+work[LICENSE_COL] = (
+    work[LICENSE_COL]
+    .astype(str)
+    .str.strip()
+    .pipe(lambda s: s.where(s != "", "unknown"))
+    .map(normalize_license)
+)
+
+# TALL: counts per author x license
+counts_tall = (
+    work
+    .groupby([AUTHOR_COL, LICENSE_COL], dropna=False)
+    .size()
+    .reset_index(name="count")
+    .sort_values([AUTHOR_COL, "count"], ascending=[True, False])
+)
+
+# WIDE: pivot to one row per author with license columns
+counts_wide = (
+    counts_tall
+    .pivot(index=AUTHOR_COL, columns=LICENSE_COL, values="count")
+    .fillna(0)
+    .astype(int)
+    .sort_index()
+)
+counts_wide["TOTAL"] = counts_wide.sum(axis=1)
+counts_wide = counts_wide.sort_values("TOTAL", ascending=False)
+
+# Save
+tall_path = Path(OUT_DIR) / "author_license_counts_tall.csv"
+wide_path = Path(OUT_DIR) / "author_license_counts_wide.csv"
+counts_tall.to_csv(tall_path, index=False)
+counts_wide.to_csv(wide_path)
+
+# Preview
+# print(f"Saved:\n  {tall_path}\n  {wide_path}")
+display(counts_tall.head(20))
+display(counts_wide.head(20))
+```
+
+## Custom Licenses
+
+### Deepseek
+
+
+2. Grant of Rights
+You are granted a non-exclusive, worldwide, non-transferable and royalty-free limited license under Alibaba Cloud's intellectual property or other rights owned by Us embodied in the Materials **to use, reproduce, distribute, copy, create derivative works of, and make modifications to the Materials.**
+
+4. Restrictions
+If you are commercially using the Materials, and **your product or service has more than 100 million monthly active users, You shall request a license from Us.** You cannot exercise your rights under this Agreement without our express authorization.
+
+#### DeepSeek (Model License)
+2. Grant of Copyright License. Subject to the terms and conditions of this License, DeepSeek hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to **reproduce, prepare, publicly display, publicly perform, sublicense, and distribute** the Complementary Material, the Model, and Derivatives of the Model.
+
+***Use Restrictions** You agree not to use the Model or Derivatives of the Model:
+In any way that violates any applicable national or international law or regulation or infringes upon the lawful rights and interests of any third party;
+For military use in any way;
+For the purpose of exploiting, harming or attempting to exploit or harm minors in any way;
+To generate or disseminate verifiably false information and/or content with the purpose of harming others;
+To generate or disseminate inappropriate content subject to applicable regulatory requirements; 
+To generate or disseminate personal identifiable information without due authorization or for unreasonable use;
+To defame, disparage or otherwise harass others;
+For fully automated decision making that adversely impacts an individual’s legal rights or otherwise creates or modifies a binding, enforceable obligation;
+For any use intended to or which has the effect of discriminating against or harming individuals or groups based on online or offline social behavior or known or predicted personal or personality characteristics;
+To exploit any of the vulnerabilities of a specific group of persons based on their age, social, physical or mental characteristics, in order to materially distort the behavior of a person pertaining to that group in a manner that causes or is likely to cause that person or another person physical or psychological harm;
+For any use intended to or which has the effect of discriminating against individuals or groups based on legally protected characteristics or categories.
+
+
+### Llama
+
+### Grok
+
+### Gemma 
+
+# Exploratory Analysis
+## Core descriptive statistics
+- Total number of models
+- Number of unique organizations or authors
+- Distribution of licenses
+    - License coverage (Missing metadata counts)
+
+## Author and organization metrics
+- Most prolific authors (count of models per author)
+- Authors with the most downloads
+
+## Model metrics
+- Models with the most children
+- Models with the most downloads
+
+
+## Datasets
+- Datasets most used
+- Distribution of licenses
+
+## License relationships
+- License propagation
+    - Does the license of children typically match that of their base model?
+
+## Genealogy & derivation insights
+- Average number of derivations per model
+- Most influential models (top N by descendant count)
+- Model lineage length — longest chain of derivation (depth)
+
+- Proportion of derived vs. original models
+
+## Temporal patterns
+- Model releases over time
+    - by month or year (time series)
+- Trends by license
+    - Are permissive or restrictive licenses increasing?
+
+
+## Tags, tasks, and categories
+- Most common task types
+    - Tags like “text-generation,” “image-classification,” etc.:
+
+- Co-occurrence of tasks and licenses
+
+
+## Further down the road
+Author specialization
+- Which authors dominate particular task categories?
+
+Co-occurrence
+- Licenses 
+- Models/datasets
+
+# Analysis Guiding Questions
+
+| **Category**          | **Example Question**                                                 |
+|------------------------|----------------------------------------------------------------------|
+| License Environment    | Which licenses dominate?                                              |
+| License Environment    | How do licenses propagate through time?                               |
+| Authorship Patterns    | Who builds the most models, and how do they collaborate?              |
+| Genealogy Influence    | Which models are most reused as bases?                                |
+| Temporal Dynamics      | When did major growth periods occur?                                 |
+| Topical Trends         | Which task domains are expanding fastest?                            |
+
+```{python}
+#| echo: false
+#| output: false
+import pandas as pd
+df = pd.DataFrame({"x":[1,2,3], "y":[5,6,7]})
+df
+
+```

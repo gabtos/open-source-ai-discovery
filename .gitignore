@@ -1,0 +1,14 @@
+# Ignore API calls notebooks
+author-search.ipynb
+exploratory_analysis.ipynb
+hugging-face.ipynb
+text-search.ipynb
+sanity-check.ipynb
+all-model-analysis.ipynb
+
+# Ignore all outputs
+*.csv
+*.json
+
+# Ignore macOS hidden files
+.DS_Store
