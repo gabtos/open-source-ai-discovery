@@ -23,18 +23,21 @@ format:
 ---
 
 ## 1.0 Executive Summary
-The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term Open Source AI using clear, unambiguous standards. Yet, openness in AI is nascent and inconsistently understood. 
+Founded in 1998, the [Open Source Initiative (OSI)](https://opensource.org/) is a global nonprofit that advances Open Source software through advocacy, policy research, and engagement across developers, corporations, nonprofits, and governments. The OSI maintains the Open Source Definition (OSD) and, more recently, released the 1.0 Open Source AI Definition (OSAID). Through these definitions, the OSI seeks to ensure that digital systems can be freely accessed, used, modified, and shared by anyone, upholding the four core freedoms of Open Source philosophy. 
 
-Drawing on a growing set of current AI models described as "open", this study explores how the term is currently applied and describes how different conceptions of open AI relate to the use, sharing, study, and modification of these models.
+The availability and flexibility of Open Source software makes it an attractive, and in some contexts crucial, mechanism for building digital tools within industry and government. Open Source Software (OSS) underpins critical infrastructure and consumer technologies, from electric grids to medical software and smartphone apps. Today, OSS contributes tens of billions in economic output in the U.S. and more than $8 trillion globally. The value derived is expected to grow as Open Source AI is adopted across public and private sectors. 
 
-This project uses model metadata from [Hugging Face](https://huggingface.co/) to understand how "open" AI models are described. The goal is to uncover patterns in how the idea of "open" models is used in practice. 
+The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term *Open Source AI* using clear, unambiguous standards. Yet, openness in AI is nascent and inconsistently understood. 
+
+This project uses AI model metadata from [Hugging Face](https://huggingface.co/) to understand how "open" AI models are deployed. The goal is to uncover patterns in how the concept of "open" AI is used in practice. 
+
 
 ::: {.callout-tip title="Why now?"}
-The AI boom, driven by unprecedented investment and access to tools, has spawned a flood of models claiming to be “open.” 
+The AI boom, driven by unprecedented investment and access to tools, has spawned a flood of models claiming to be open. 
 :::
 
 ### 1.1 Goals
-- Understand how “open” models are being released 
+- Understand how “open” AI models are being released 
 - Analyze key trends in “open” AI model releases
 
 **Not**
@@ -45,14 +48,15 @@ The AI boom, driven by unprecedented investment and access to tools, has spawned
 ### 1.2 Data Gathering
 Hugging Face is the most widely-used platform for AI models with over 200,000 models hosted on the repository. It allows people to share and use AI models and related datasets. 
 
-This study downloaded AI model metadata using the Hugginface [Hub API](https://huggingface.co/docs/hub/api). Metadata incldues `model name`,`author`, `release date`, `license`, and `last modified date`, `base-model`, `downloads`. 
+This study uses AI model metadata downloaded through the Hugging Face [Hub API](https://huggingface.co/docs/hub/api). Metadata includes `model name`,`author`, `release date`, `license`, and `last modified date`, `base-model`, and `downloads`. 
 
-- Selected models using full-text-search, looking for any models where the model name or metadata includes the word 'open' (N = 20,069)
-- Using author search for large AI labs (Alibaba, Deepseek, Google, Meta, Microsoft, Mistral, XAI, Open AI) 
-(N=2,028)
+Two searches where performed
+
+- **Full-text-search (N = 20,069):** searching for any models where the model name or metadata includes the word "open"
+- **Author search (N=2,028):** searching for AI models released by prominent AI labs (Alibaba, Deepseek, Google, Meta, Microsoft, Mistral, XAI, Open AI) 
 
 ### 1.3 Key Findings
-Preliminary exploratory analysis of the Huggin Face data points to highly heterogeneous practices in how developers signal openness in AI. These results illustrate some promise in OSAID adoption as well as confusion surrounding licensing practices. 
+Preliminary exploratory analysis of the Hugging Face data points to differing practices in how developers signal openness in AI. These results illustrate some consistency with the OSAID as well as friction surrounding licensing practices. 
 
 - The overwhelming majority of “open” models are based on larger models
 - Apache 2.0 is the most popular OSI-approved license, followed by MIT
@@ -62,7 +66,7 @@ Preliminary exploratory analysis of the Huggin Face data points to highly hetero
 - Custom licenses like Qwen, Llama, Gemma, Grok, OpenRAIL are becoming increasingly common, specially for flagship models, yet impose usage restrictions
 
 ### 1.4 Presentation
-Get the video and a presentation from the 2025 All Things Open Conference. 
+Preliminary study findings where presented at the [All Things Open Conference](https://2025.allthingsopen.org/) hosted in Raleigh, NC, USA in October, 2025
 
 [Presentation video](https://opensource.org/blog/state-of-the-source-at-ato-2025-state-of-the-open-ai)
 
@@ -420,12 +424,12 @@ display_popular_models
 ```
 
 ### 3.2 Popular Models' Licenses
-At the organization level, licensing practices are surprisingly homogeneous. First, all organizations in this study, except for OpenAI, have models that use a proprietary (i.e. custom) license as well as models that use OSI-approved Open Source licences. 
+At the organization level, licensing practices are surprisingly homogeneous. First, all organizations in this study, except for OpenAI, have models that use a proprietary (i.e. custom) license as well as models that use OSI-approved Open Source licenses. 
 
 In general, the organizations are released their largest, flagship 'open' model under a restrictive, customized license while smaller or older models are released under permissive or standard Open Source licenses. 
 
 ::: {.callout-tip title="Why this matters?"}
-Every custom license (.e.g Llama, Qwen) in this study uses the language of Open Source, including permissions to use, study, share and modify the system while at the same time imposing restrctions on how or where a system is used. Often, usage restrictions are subject to Acceptable Use Policies akin to consumer apps and services. 
+Every custom license (.e.g Llama, Qwen) in this study uses the language of Open Source, including permissions to use, study, share and modify the system while at the same time imposing restrictions on how or where a system is used. Often, usage restrictions are subject to Acceptable Use Policies akin to consumer apps and services. 
 :::
 
 | Organization | Number of Models | License Types |
