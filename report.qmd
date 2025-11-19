@@ -6,7 +6,7 @@ author:
     orcid: 0009-0005-0673-9708
     email: first_name.last_name@duke.edu
     affiliations:
-      - name: Duke University Sanford School of Public Policy
+      - name: Duke University, Sanford School of Public Policy
 output-file: "index.html"
 format:
   html:
@@ -23,7 +23,7 @@ format:
 ---
 
 ## 1.0 Executive Summary
-Founded in 1998, the [Open Source Initiative (OSI)](https://opensource.org/) is a global nonprofit that advances Open Source software through advocacy, policy research, and engagement across developers, corporations, nonprofits, and governments. The OSI maintains the Open Source Definition (OSD) and, more recently, released the 1.0 Open Source AI Definition (OSAID). Through these definitions, the OSI seeks to ensure that digital systems can be freely accessed, used, modified, and shared by anyone, upholding the four core freedoms of Open Source philosophy. 
+Founded in 1998, the [Open Source Initiative (OSI)](https://opensource.org/) is a global nonprofit that advances Open Source software through advocacy, policy research, and engagement across developers, corporations, nonprofits, and governments. The OSI maintains the Open Source Definition (OSD) and, more recently, released the 1.0 Open Source AI Definition (OSAID). Through these definitions, the OSI seeks to ensure that digital systems can be freely accessed, used, modified, and shared by anyone, upholding the four core freedoms of the Open Source philosophy. 
 
 The availability and flexibility of Open Source software makes it an attractive, and in some contexts crucial, mechanism for building digital tools within industry and government. Open Source Software (OSS) underpins critical infrastructure and consumer technologies, from electric grids to medical software and smartphone apps. Today, OSS contributes tens of billions in economic output in the U.S. and more than $8 trillion globally. The value derived is expected to grow as Open Source AI is adopted across public and private sectors. 
 
@@ -258,9 +258,14 @@ plot_license_trends(
     figsize=(8,5)
 )
 
+import plotly.express as px
+
+df = df_temp
+fig = px.line(df, x="year", y="lifeExp", color='country')
+fig.show()
+
 
 ```
-
 
 
 ### 2.3 Licenses by author
@@ -398,12 +403,11 @@ This trend reflects a growing prevalence of “open washing,” in which develop
 ## 3.0 Popular Models & Their Licenses
 Many models are built using other, larger models. Greater understanding of the terms under which these large models are released will be instrumental as we look further into how developers use and interpret the OSAID and Open Source AI.  
 
-::: {.callout-tip title="Why this matters?"}
-The licensing and AI model publishing practices among popularly-used models will likely have greater downstream influence. 
-::: 
-
 ### 3.1 Top 10 Most Popular Models
 While the sample has over 20,000 models, many use other "base models" which are result in smaller models that are [fine-tuned](https://huggingface.co/docs/transformers/training) or [quantized](https://huggingface.co/docs/optimum/en/concept_guides/quantization) versions of the larger base model.
+
+The `children_count` parameter looks at how many models in our sample use the specified model as a base. 
+
 
 
 ```{python}
@@ -420,8 +424,11 @@ display_popular_models = popular_models_df[['model_name', 'num_children']] \
 
 display_popular_models
 
-
 ```
+
+::: {.callout-tip title="Why this matters?"}
+The licensing and AI model publishing practices among popularly-used models will likely have greater downstream influence. 
+::: 
 
 ### 3.2 Popular Models' Licenses
 At the organization level, licensing practices are surprisingly homogeneous. First, all organizations in this study, except for OpenAI, have models that use a proprietary (i.e. custom) license as well as models that use OSI-approved Open Source licenses. 
@@ -532,4 +539,5 @@ I plan to extend this study by:
 - Tracking license propagation to see if restrictions are spreading correctly or being ignored.
 - Analyzing download and reuse trends to measure real-world impact.
 - Studying documentation practices and how developers describe openness.
+- Search and investigate datasets.
 - Connecting these findings to policy frameworks, since future AI legislation will hinge on how “open source AI” is defined and applied.
