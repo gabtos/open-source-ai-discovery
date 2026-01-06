@@ -23,7 +23,7 @@ format:
 ---
 
 ## 1.0 Executive Summary
-Founded in 1998, the [Open Source Initiative (OSI)](https://opensource.org/) is a global nonprofit that advances Open Source software through advocacy, policy research, and engagement across developers, corporations, nonprofits, and governments. The OSI maintains the Open Source Definition (OSD) and, more recently, released the 1.0 Open Source AI Definition (OSAID). Through these definitions, the OSI seeks to ensure that digital systems can be freely accessed, used, modified, and shared by anyone, upholding the four core freedoms of the Open Source philosophy. 
+Founded in 1998, the [Open Source Initiative (OSI)](https://opensource.org/) is a global nonprofit that advances Open Source software through advocacy, policy research, and engagement across developers, corporations, nonprofits, and governments. The OSI maintains the Open Source Definition (OSD) and, more recently, released the 1.0 Open Source AI Definition (OSAID). Through these definitions, the OSI seeks to ensure that digital systems can be freely *accessed, used, modified, and shared* by anyone, upholding the four core freedoms of the Open Source philosophy. 
 
 The availability and flexibility of Open Source software makes it an attractive, and in some contexts crucial, mechanism for building digital tools within industry and government. Open Source Software (OSS) underpins critical infrastructure and consumer technologies, from electric grids to medical software and smartphone apps. Today, OSS contributes tens of billions in economic output in the U.S. and more than $8 trillion globally. The value derived is expected to grow as Open Source AI is adopted across public and private sectors. 
 
@@ -257,13 +257,6 @@ plot_license_trends(
     top_n=5,
     figsize=(8,5)
 )
-
-import plotly.express as px
-
-df = df_temp
-fig = px.line(df, x="year", y="lifeExp", color='country')
-fig.show()
-
 
 ```
 
