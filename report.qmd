@@ -23,13 +23,13 @@ format:
 ---
 
 ## 1.0 Executive Summary
-Founded in 1998, the [Open Source Initiative (OSI)](https://opensource.org/) is a global nonprofit that advances Open Source software through advocacy, policy research, and engagement across developers, corporations, nonprofits, and governments. The OSI maintains the Open Source Definition (OSD) and, more recently, released the 1.0 Open Source AI Definition (OSAID). Through these definitions, the OSI seeks to ensure that digital systems can be freely *accessed, used, modified, and shared* by anyone, upholding the four core freedoms of the Open Source philosophy. 
+In collaboration the [Open Source Initiative (OSI)](https://opensource.org/)  This project uses AI model metadata from [Hugging Face](https://huggingface.co/) to understand how "open" AI models are deployed. The goal is to uncover patterns in how the concept of "open" AI is used in practice. 
+
+Founded in 1998, OSI is a global nonprofit that advances Open Source software through advocacy, policy research, and engagement across developers, corporations, nonprofits, and governments. The OSI maintains the Open Source Definition (OSD) and, more recently, released the 1.0 [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition). Through these definitions, the OSI seeks to ensure that digital systems can be freely *accessed, used, modified, and shared* by anyone, upholding the four core freedoms of the Open Source philosophy. 
 
 The availability and flexibility of Open Source software makes it an attractive, and in some contexts crucial, mechanism for building digital tools within industry and government. Open Source Software (OSS) underpins critical infrastructure and consumer technologies, from electric grids to medical software and smartphone apps. Today, OSS contributes tens of billions in economic output in the U.S. and more than $8 trillion globally. The value derived is expected to grow as Open Source AI is adopted across public and private sectors. 
 
-The October 2024 release of the [Open Source AI Definition (OSAID)](https://opensource.org/ai/open-source-ai-definition) sought to anchor the term *Open Source AI* using clear, unambiguous standards. Yet, openness in AI is nascent and inconsistently understood. 
-
-This project uses AI model metadata from [Hugging Face](https://huggingface.co/) to understand how "open" AI models are deployed. The goal is to uncover patterns in how the concept of "open" AI is used in practice. 
+The October 2024 release of the OSAID sought to anchor the term *Open Source AI* using clear, unambiguous standards. Yet, openness in AI is nascent and inconsistently understood. 
 
 
 ::: {.callout-tip title="Why now?"}
